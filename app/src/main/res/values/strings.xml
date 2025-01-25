@@ -29,4 +29,5 @@
     <string name="limit_help">Click para cambiar</string>
     <string name="delete">Borrar</string>
     <string name="deleted">Pokemon borrado</string>
+    <string name="clicked">Clicked</string>
 </resources>

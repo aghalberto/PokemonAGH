@@ -55,7 +55,7 @@ public class CapturadosRecyclerViewAdapter extends RecyclerView.Adapter<Capturad
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context.getApplicationContext(), "ITEM", LENGTH_LONG).show();
-                goToDetail();
+                goToDetail(pkm, v);
             }
         });
 
@@ -75,8 +75,13 @@ public class CapturadosRecyclerViewAdapter extends RecyclerView.Adapter<Capturad
 
     }
 
-    private void goToDetail() {
-
+    /**
+     * Navega al fragmento detalle con el pokemon seleccionado
+     * @param p El Pokemon
+     * @param view La Vista
+     */
+    private void goToDetail(Pokemon p, View view) {
+        ((MainActivity) context).personajeClicked(p, view);
     }
 
     /**

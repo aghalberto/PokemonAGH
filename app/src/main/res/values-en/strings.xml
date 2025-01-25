@@ -25,4 +25,5 @@
     <string name="refresh">View</string>
     <string name="limit_help">Click to change the value</string>
     <string name="deleted">Pokemon borrado</string>
+    <string name="clicked">Clicked</string>
 </resources>

@@ -4,6 +4,8 @@ import android.app.LocaleManager;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -208,6 +210,30 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
     */
+
+    /**
+     * Navega a un fragment detail al hacer click
+     * @param pkm
+     * @param view
+     */
+    public void personajeClicked(Pokemon pkm, View view) {
+        //Toast
+        Toast.makeText(
+                getApplicationContext(),
+                getResources().getString(R.string.clicked) + pkm.getNombre(),
+                Toast.LENGTH_SHORT).show();
+
+        // Crear un Bundle para pasar los datos al PersonajeDetailFragment
+        Bundle bundle = new Bundle();
+
+        bundle.putString("textViewNombre", pkm.getNombre());
+        bundle.putString("detail_imagen", pkm.getImagenFrontal());
+        bundle.putString("weight", Integer.toString(pkm.getPeso()));
+        bundle.putString("height", Integer.toString(pkm.getAltura()));
+
+        // Navegar al PersonajeDetailFragment con el Bundle
+        Navigation.findNavController(view).navigate(R.id.fragment_detail, bundle);
+    }
 
     @Override
     protected void onDestroy() {
