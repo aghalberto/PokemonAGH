@@ -20,6 +20,8 @@ Se muestran los pokemon capturados.
 Al lado del Pokemon hay un botón de borrado; si se pulsa se borra el pokemon de la Base de Datos.
 ![image](https://github.com/user-attachments/assets/0422eac0-5fba-4435-9562-0d731b8fb3df)
 
+Al hacer click sobre un Pokemon, se muestra su detalle.
+![image](https://github.com/user-attachments/assets/62fe9167-70ee-49c4-a451-954cb45b56fb)
 
 
 ### RecyclerView: Pokedex
