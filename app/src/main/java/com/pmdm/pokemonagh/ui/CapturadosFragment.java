@@ -47,7 +47,6 @@ public class CapturadosFragment extends Fragment {
         binding.button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getContext(), "CLICK EN botón", Toast.LENGTH_SHORT).show();
                 FirestoneApi firestoneApi = new FirestoneApi();
                 firestoneApi.consultaCapturados();
             }
@@ -63,6 +62,8 @@ public class CapturadosFragment extends Fragment {
      */
     public CapturadosFragment() {
         super(R.layout.fragment_capturados);
+        FirestoneApi firestoneApi = new FirestoneApi();
+        this.capturados = firestoneApi.getPokemonCapturados();
     }
 
     public void addPokemon(Pokemon p) {

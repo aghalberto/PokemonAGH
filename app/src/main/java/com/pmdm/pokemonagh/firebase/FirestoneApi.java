@@ -18,10 +18,19 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pmdm.pokemonagh.model.Pokemon;
 import com.pmdm.pokemonagh.model.TiposPokemon;
+import com.pmdm.pokemonagh.retrofit.PokemonApiClient;
+import com.pmdm.pokemonagh.retrofit.PokemonApiInterface;
+import com.pmdm.pokemonagh.retrofit.PokemonData;
+import com.pmdm.pokemonagh.retrofit.PokemonList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FirestoneApi {
 
@@ -38,6 +47,8 @@ public class FirestoneApi {
     public FirebaseFirestore getDb() {
         return db;
     }
+
+    private PokemonApiInterface pkmInterface = PokemonApiClient.getClient().create(PokemonApiInterface.class);
 
     public void setDb(FirebaseFirestore db) {
         this.db = db;
@@ -63,9 +74,26 @@ public class FirestoneApi {
      * @return true si lo hace, false si no lo hace
      */
     public boolean addPokemon(Pokemon p){
-        //Chequeo BD
+        //Obtenemos y modificamos los datos del pokemon
 
-        //Primero creamos un pokemon
+        Call<PokemonData> call = pkmInterface.doGetPokemonByName(p.getNombre());
+        call.enqueue(new Callback<PokemonData>() {
+            @Override
+            public void onResponse(Call<PokemonData> call, Response<PokemonData> response) {
+
+                PokemonData pkmData = response.body();
+                Integer height = pkmData.height;
+                Integer weight = pkmData.weight;
+                p.setAltura(height);
+                p.setPeso(weight);
+            }
+            @Override
+            public void onFailure(Call<PokemonData> call, Throwable t) {
+                call.cancel();
+            }
+        });
+
+        //Creamos el pokemon mapeado
         Map<String, Object> pokemon = new HashMap<>();
         pokemon = mapearPokemon(p);
 

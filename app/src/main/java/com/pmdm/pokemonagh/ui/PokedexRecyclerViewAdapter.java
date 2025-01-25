@@ -19,6 +19,8 @@ import com.pmdm.pokemonagh.R;
 import com.pmdm.pokemonagh.databinding.PokedexCardviewBinding;
 import com.pmdm.pokemonagh.firebase.FirestoneApi;
 import com.pmdm.pokemonagh.model.Pokemon;
+import com.pmdm.pokemonagh.retrofit.PokemonApiClient;
+import com.pmdm.pokemonagh.retrofit.PokemonApiInterface;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class PokedexRecyclerViewAdapter  extends RecyclerView.Adapter<PokedexVie
 
     private final ArrayList<Pokemon> pokemons;
     private final Context context;
+
 
     int selectedPosition = -1;
 
@@ -61,11 +64,7 @@ public class PokedexRecyclerViewAdapter  extends RecyclerView.Adapter<PokedexVie
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Toast.makeText(context.getApplicationContext(), "CLICKADO", LENGTH_SHORT).show();
-                itemClicked(holder, elPokemon);
-                selectedPosition = holder.getLayoutPosition();
-                 */
+
                 if (capturarPokemon(elPokemon)) {
                     Toast.makeText(context.getApplicationContext(), R.string.catched, LENGTH_LONG).show();
                     elPokemon.setCapturado(true);
@@ -85,23 +84,6 @@ public class PokedexRecyclerViewAdapter  extends RecyclerView.Adapter<PokedexVie
 
         //super.onBindViewHolder(holder, position, payloads);
     } //Fin onBindViewHolder
-
-    /**
-     * Al pinchar, guardamos el pokemon en la BBDD
-     * @param holder
-     * @param pkm El Pokemon
-     */
-    private void itemClicked(PokedexViewHolder holder, Pokemon pkm) {
-        FirestoneApi firestoneApi = new FirestoneApi();
-        boolean capturado = firestoneApi.addPokemon(pkm);
-        if (capturado) {
-            //Toast.makeText(this, "Pokemon capturado", LENGTH_SHORT).show();
-        } else {
-            //Toast.makeText(this, "Error", LENGTH_SHORT).show();
-        }
-
-
-    } //Fin itemClicked
 
     private boolean capturarPokemon(Pokemon p){
         Boolean capturado = false;

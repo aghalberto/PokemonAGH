@@ -36,7 +36,14 @@
                 android:contentDescription="ALT"
                 android:src="@drawable/pokemon_catch" />
 
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
 
+                android:src="@drawable/baseline_delete_24"
+                android:text="@string/delete" />
 
         </LinearLayout>
 
