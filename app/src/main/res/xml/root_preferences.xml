@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/title_settings">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="switch_hide_catched"
+            android:title="@string/hide_catched"
+            android:summaryOff="@string/hidding_summary_off"
+            android:summaryOn="@string/hidding_summary_on"/>
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="switch_language"
+            android:summaryOff="@string/english"
+            android:switchTextOff="@string/english"
+            android:summaryOn="@string/spanish"
+            android:switchTextOn="@string/spanish"
+            android:title="@string/language" />
+        <EditTextPreference
+            android:summary="@string/limit_help"
+            android:defaultValue="150"
+            android:inputType="number"
+            android:key="edit_text_limit"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/limit" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="check_box_close"
+            android:title="@string/close_session" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

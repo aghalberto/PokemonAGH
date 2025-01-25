@@ -1,0 +1,44 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="pokemon"
+            type="com.pmdm.pokemonagh.model.Pokemon">
+        </variable>
+    </data>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_pokemon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/pokedex_cardview_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/pkm_red"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pkm_blue"
+                android:text="@string/nombre"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imagen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:scaleType="fitEnd"
+                android:contentDescription="ALT"
+                android:src="@drawable/pokemon_catch" />
+
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

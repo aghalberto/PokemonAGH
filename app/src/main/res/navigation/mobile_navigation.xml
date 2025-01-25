@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_capturados">
+
+    <fragment
+        android:id="@+id/navigation_pokedex"
+        android:name="com.pmdm.pokemonagh.ui.PokedexFragment"
+        android:label="@string/title_pokedex"
+        tools:layout="@layout/fragment_pokedex" />
+
+    <fragment
+        android:id="@+id/navigation_capturados"
+        android:name="com.pmdm.pokemonagh.ui.CapturadosFragment"
+        android:label="@string/title_captured"
+        tools:layout="@layout/fragment_capturados" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.pmdm.pokemonagh.ui.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/fragment_detail"
+        android:name="com.pmdm.pokemonagh.ui.DetailFragment"
+        android:label="@string/title_detail"
+        tools:layout="@layout/fragment_detail" />
+
+</navigation>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_pokedex">Pokedex</string>
+    <string name="title_captured">Catched</string>
+    <string name="title_settings">Settings</string>
+    <string name="delete_catched">Deleted catched</string>
+    <string name="language">Language</string>
+    <string name="spanish">Español</string>
+    <string name="english">English</string>
+    <string name="nombre">Name</string>
+    <string name="catch_error">Error catching the PKM</string>
+    <string name="catched">CATCHED!!</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="types">Types</string>
+    <string name="added">Add to collection</string>
+    <string name="fail">Error trying to add</string>
+    <string name="limit">Limit</string>
+    <string name="close_session">Close session</string>
+    <string name="hide_catched">Hide catched</string>
+    <string name="hidding_summary_off">ALL Pokemon will be displayed</string>
+    <string name="hidding_summary_on">Catched Pokemon WILL NOT be displayed</string>
+    <string name="title_detail">Detail</string>
+    <string name="login_fail">Auth. fail</string>
+    <string name="refresh">View</string>
+    <string name="limit_help">Click to change the value</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="pkm_red">#FF0000</color>
+    <color name="pkm_blue">#3B4CCA</color>
+    <color name="pkm_yellow">#FFDE00</color>
+    <color name="pkm_red2">#B22222</color>
+    <color name="pkm_blue2">#00008B</color>
+    <color name="pkm_gold">#FFD700</color>
+</resources>

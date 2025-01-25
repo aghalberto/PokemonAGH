@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "539309836157",
+    "project_id": "pokemonagh-5482f",
+    "storage_bucket": "pokemonagh-5482f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539309836157:android:373d89f67dd915d677ae14",
+        "android_client_info": {
+          "package_name": "com.pmdm.pokemonagh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539309836157-7d1jkmsaomiqvnflsrmjnm1neleqsmqn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pmdm.pokemonagh",
+            "certificate_hash": "63721d0d15201fa9d415835a5087ffc4fd9eda8b"
+          }
+        },
+        {
+          "client_id": "539309836157-fhj04mgdaqfsuumoej2ra736ana2kklp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-1RiWBnrQUseDVrSmBh8XxjVuXyTWVuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539309836157-fhj04mgdaqfsuumoej2ra736ana2kklp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

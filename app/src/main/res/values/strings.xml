@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">PokemonAGH</string>
+    <string name="title_pokedex">Pokedex</string>
+    <string name="title_captured">Capturados</string>
+    <string name="title_settings">Ajustes</string>
+    <string name="delete_catched">Borrar capturados</string>
+    <string name="language">Idioma</string>
+    <string name="spanish">Español</string>
+    <string name="english">English</string>
+    <string name="nombre">Nombre</string>
+    <string name="catched_summary_off">No se mostrarán en la Pokedex los Pokemon capturados</string>
+    <string name="show_catched">Mostrar SÓLO capturados</string>
+    <string name="catched_summary_on">Solamente se mostrarán en la Pokedex los Pokemon capturados</string>
+    <string name="catch_error">Error capturando el Pokemon</string>
+    <string name="catched">CAPTURADO!!</string>
+    <string name="weight">Peso</string>
+    <string name="height">Altura</string>
+    <string name="types">Tipos</string>
+    <string name="added">Agregado a la colección</string>
+    <string name="fail">No se pudo agregar a la colección</string>
+    <string name="limit">Límite</string>
+    <string name="close_session">Cerrar Sesión</string>
+    <string name="hide_catched">Ocultar capturados</string>
+    <string name="hidding_summary_off">Se mostrarán todos los pokemon, capturados y sin capturar</string>
+    <string name="hidding_summary_on">Los pokemon capturados NO se mostrarán en la Pokedex</string>
+    <string name="title_detail">Detalle</string>
+    <string name="login_fail">Falló la autenticación</string>
+    <string name="refresh">Ver</string>
+    <string name="limit_help">Click para cambiar</string>
+</resources>

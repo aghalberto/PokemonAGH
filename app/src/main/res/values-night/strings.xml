@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_pokedex">Pokedex</string>
+    <string name="title_captured">Capturados</string>
+    <string name="title_settings">Ajustes</string>
+    <string name="hide_catched">Ocultar capturados</string>
+    <string name="title_detail">Detalle</string>
+    <string name="login_fail">Falló la autenticación</string>
+    <string name="refresh">Ver</string>
+    <string name="limit_help">Click para cambiar</string>
+</resources>
