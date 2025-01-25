@@ -72,9 +72,10 @@ public class PokedexRecyclerViewAdapter  extends RecyclerView.Adapter<PokedexVie
                     Picasso.get()
                             .load(elPokemon.getImagenFrontal())
                             .into(cardviewBinding.imagen);
-                    cardviewBinding.cardviewPokemon.setCardBackgroundColor(R.color.white);
+
                     notifyDataSetChanged();
-                    notifyItemChanged(holder.getAdapterPosition());
+                    //notifyItemChanged(holder.getAdapterPosition());
+                    //notifyItemRemoved(position);
                 }
                 else {
                     Toast.makeText(context.getApplicationContext(), R.string.catch_error, LENGTH_LONG).show();
@@ -89,8 +90,8 @@ public class PokedexRecyclerViewAdapter  extends RecyclerView.Adapter<PokedexVie
         Boolean capturado = false;
         FirestoneApi firestoneApi = new FirestoneApi();
         capturado =  firestoneApi.addPokemon(p);
-        CapturadosFragment capturadosFragment = new CapturadosFragment();
-        capturadosFragment.addPokemon(p);
+        //CapturadosFragment capturadosFragment = new CapturadosFragment();
+        //capturadosFragment.addPokemon(p);
         return capturado;
     }
 

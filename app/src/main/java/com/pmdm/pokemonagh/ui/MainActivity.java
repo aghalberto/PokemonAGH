@@ -41,6 +41,24 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private LoginActivity loginActivity;
+     ArrayList<Pokemon> pkmCapturados;
+     ArrayList<Pokemon> pkmPokedex;
+
+    public ArrayList<Pokemon> getPkmCapturados() {
+        return pkmCapturados;
+    }
+
+    public void setPkmCapturados(ArrayList<Pokemon> pkmCapturados) {
+        this.pkmCapturados = pkmCapturados;
+    }
+
+    public ArrayList<Pokemon> getPkmPokedex() {
+        return pkmPokedex;
+    }
+
+    public void setPkmPokedex(ArrayList<Pokemon> pkmPokedex) {
+        this.pkmPokedex = pkmPokedex;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

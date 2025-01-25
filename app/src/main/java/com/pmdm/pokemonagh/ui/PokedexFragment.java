@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pmdm.pokemonagh.R;
-import com.pmdm.pokemonagh.databinding.ActivityMainBinding;
+
 import com.pmdm.pokemonagh.databinding.FragmentPokedexBinding;
 import com.pmdm.pokemonagh.firebase.FirestoneApi;
 import com.pmdm.pokemonagh.model.Pokemon;
@@ -56,26 +56,40 @@ public class PokedexFragment extends Fragment {
                 PreferenceManager.getDefaultSharedPreferences(this.getContext());
         String limite = sharedPreferences.getString("edit_text_limit", "50");
 
-        //llamarApiPokemon();
+        //llamamos ApiPokemon para obtener la pokedex, y se la pasamos al MainActivity
         pokedex = getPokedex(limite);
-        //pkCapturados = firestoneApi.getPokemonCapturados();
+        ((MainActivity)getActivity()).setPkmPokedex(pokedex);
+
+        //Intentamos obtener los pokemon capturados
+        pkCapturados = ((MainActivity)getActivity()).getPkmCapturados();
+
+        boolean capturado = false;
+
+        for (Pokemon pPokedex : pokedex){
+            capturado = firestoneApi.pokemonEstaCapturado(pPokedex.getNombre());
+            if (capturado) pPokedex.setCapturado(true);
+        }
 
         if (pokedex != null && pokedex.size() > 0) {
-
             adapter = new PokedexRecyclerViewAdapter(pokedex, getActivity());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(adapter);
         }
 
-
         return root;
     }//fin onCreateView
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //pokedex.clear(); pokedex = getPokedex("10");
+
+    }
 
     /**
      * Constructor.
      */
     public PokedexFragment(){
-
         super(R.layout.fragment_pokedex);
     } //Fin Constructor
 
@@ -100,7 +114,6 @@ public class PokedexFragment extends Fragment {
                 List<PokemonList.Results> results = pkmList.results;
                 pokedex.clear();
                 for(PokemonList.Results r: results){
-
                     if ( r.name != null && r.url != null) {
                         Pokemon p = new Pokemon(r.name, r.url);
                         //Añadimos el pokemon al array local

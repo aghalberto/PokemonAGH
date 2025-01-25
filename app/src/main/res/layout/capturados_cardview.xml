@@ -19,14 +19,6 @@
             android:orientation="horizontal"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/nombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/pkm_blue"
-                android:text="@string/nombre"
-                android:textSize="20sp" />
-
             <ImageView
                 android:id="@+id/imagen"
                 android:layout_width="50dp"
@@ -36,10 +28,18 @@
                 android:contentDescription="ALT"
                 android:src="@drawable/pokemon_catch" />
 
+            <TextView
+                android:id="@+id/nombre"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pkm_blue"
+                android:text="@string/nombre"
+                android:textSize="20sp" />
+
             <ImageButton
                 android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
 
                 android:src="@drawable/baseline_delete_24"

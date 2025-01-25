@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pmdm.pokemonagh.model.Pokemon;
+import com.pmdm.pokemonagh.model.PokemonDB;
 import com.pmdm.pokemonagh.model.TiposPokemon;
 import com.pmdm.pokemonagh.retrofit.PokemonApiClient;
 import com.pmdm.pokemonagh.retrofit.PokemonApiInterface;
@@ -80,10 +81,9 @@ public class FirestoneApi {
         call.enqueue(new Callback<PokemonData>() {
             @Override
             public void onResponse(Call<PokemonData> call, Response<PokemonData> response) {
-
                 PokemonData pkmData = response.body();
-                Integer height = pkmData.height;
-                Integer weight = pkmData.weight;
+                int height = pkmData.height;
+                int weight = pkmData.weight;
                 p.setAltura(height);
                 p.setPeso(weight);
             }
@@ -154,7 +154,6 @@ public class FirestoneApi {
     public void consultaCapturados(){
         ArrayList<Pokemon> capturados = new ArrayList<Pokemon>();
 
-
         DocumentReference docRef = db.collection("capturados").document("squirtle");
         docRef.get()
             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -181,34 +180,20 @@ public class FirestoneApi {
               }
           }
         );
-/*
-        db.collection("capturados")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            setRetorno(true);
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Pokemon p = document.toObject(Pokemon.class);
-                                //capturados.add(p);
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            //Log.w(TAG, "Error getting documents.", task.getException());
-                            setRetorno(false);
-                        }
-                    }
-                });
-                */
 
-    }
-
+    } //fin consultaCapturados
     boolean estaCapturado = false;
     public boolean pokemonEstaCapturado(String nombrePokemon){
 
         DocumentReference docRef = db.collection("capturados").document(nombrePokemon);
         docRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) estaCapturado = true;
+                        else estaCapturado = false;
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -238,13 +223,43 @@ public class FirestoneApi {
     public ArrayList<Pokemon> getPokemonCapturados(){
 
         ArrayList<Pokemon> capturados = new ArrayList<Pokemon>();
-        capturados.add(new Pokemon("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"));
+        ArrayList<PokemonDB> pokemonDBArrayList = new ArrayList<>();
 
         db.collection("capturados")
                 .get()
+                /*
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            setRetorno(true);
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            setRetorno(false);
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+
+
+                })
+                */
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        for (DocumentSnapshot documentSnapshot : querySnapshot){
+                            //PokemonDB pokemonDB = documentSnapshot.toObject(PokemonDB.class);
+                            try{
+                                String pkUrl = documentSnapshot.get("url").toString();
+                                String pkName = documentSnapshot.get("name").toString();
+                                //String pkName = pkUrl;
+                                capturados.add(new Pokemon(pkName, pkUrl));
+                            } catch (Exception e){
+                                Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
+                            }
+
+                        }
                         setRetorno(true);
                     }
                 })
@@ -253,25 +268,34 @@ public class FirestoneApi {
                     public void onFailure(@NonNull Exception e) {
                         setRetorno(false);
                     }
-                })
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            setRetorno(true);
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Pokemon p = document.toObject(Pokemon.class);
-                                //capturados.add(p);
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            setRetorno(false);
-                            //Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
                 });
         return capturados;
     } //Fin getPokemonCapturados
+
+    /**
+     * Borra un pokemon de la colección capturados
+     * @param p El Pokemon
+     * @return true si lo ha borrado
+     */
+    public boolean borrarPokemon(Pokemon p){
+
+        setRetorno(true);
+        db.collection("capturados").document(p.getNombre()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        setRetorno(true);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        setRetorno(false);
+                    }
+                });
+
+        return isRetorno();
+    }
 
     /**
      * Mapea un Pokemon a un objeto Map
