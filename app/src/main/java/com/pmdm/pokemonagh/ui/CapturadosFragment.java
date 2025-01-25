@@ -50,10 +50,10 @@ public class CapturadosFragment extends Fragment {
 
         //Vamos a crear 3 o 4 pokemon
         //addPokemon(new Pokemon ("squirtel", "https://pokeapi.co/api/v2/pokemon/7/"));
-        addPokemon(new Pokemon("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"));
+        //addPokemon(new Pokemon("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"));
 
         //capturados = consultaCapturados(firestoneApi);
-        ((MainActivity)getActivity()).setPkmCapturados(capturados);
+        capturados = ((MainActivity)getActivity()).getPkmCapturados();
 
         adapter = new CapturadosRecyclerViewAdapter(capturados, getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -77,8 +77,8 @@ public class CapturadosFragment extends Fragment {
     public CapturadosFragment() {
         super(R.layout.fragment_capturados);
         //Si no lo llamo así y lo pongo con una sola línea, no va
-        FirestoneApi firestoneApi = new FirestoneApi();
-        this.capturados = firestoneApi.getPokemonCapturados();
+        //FirestoneApi firestoneApi = new FirestoneApi();
+        //this.capturados = firestoneApi.getPokemonCapturados();
         //capturados = consultaCapturados();
     }
 

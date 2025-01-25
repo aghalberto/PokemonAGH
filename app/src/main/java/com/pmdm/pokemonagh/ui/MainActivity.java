@@ -40,10 +40,26 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Login Activity (Firebase)
+     */
     private LoginActivity loginActivity;
-     ArrayList<Pokemon> pkmCapturados;
-     ArrayList<Pokemon> pkmPokedex;
 
+    /**
+     * API Firestone
+     */
+    private FirestoneApi firestoneApi = new FirestoneApi();
+
+    /**
+     * Interfaz Retrofit
+     */
+    private PokemonApiInterface pkmInterface = PokemonApiClient.getClient().create(PokemonApiInterface.class);
+
+
+    /**
+     * Pokemon Capturados (BD Firebase) declarados aquí para usar entre fragments
+     */
+    private ArrayList<Pokemon> pkmCapturados;
     public ArrayList<Pokemon> getPkmCapturados() {
         return pkmCapturados;
     }
@@ -52,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         this.pkmCapturados = pkmCapturados;
     }
 
+    /**
+     * Pokemons de la pokedex (Retrofit) para usar entre fragments
+     */
+    private ArrayList<Pokemon> pkmPokedex;
     public ArrayList<Pokemon> getPkmPokedex() {
         return pkmPokedex;
     }
@@ -59,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public void setPkmPokedex(ArrayList<Pokemon> pkmPokedex) {
         this.pkmPokedex = pkmPokedex;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +96,92 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        //Idioma
+        //Preferencias
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //Idioma
+        configurarIdioma(sharedPreferences);
+
+        //Pokemons capturados
+        setPkmCapturados(firestoneApi.getPokemonCapturados());
+
+        //Pokemons de la pokedex
+        //Obtenemos el límite de las preferencias
+        String limite = sharedPreferences.getString("edit_text_limit", "100");//"100"; //sharedPreferences.getString("edit_text_limit", "100");
+        pkmPokedex = getPokedex(sharedPreferences);
+        setPkmPokedex(pkmPokedex);
+
+    } //Fin onCreate
+
+    public ArrayList<Pokemon> getPokemonCapturados(){
+        return firestoneApi.getPokemonCapturados();
+    }
+    /**
+     * Llamada a la API para obtener la Pokedex
+     * @return La Pokedex
+     */
+    boolean estaCapturado = false;
+    public ArrayList<Pokemon> getPokedex(SharedPreferences sharedPreferences) {
+
+        ArrayList<Pokemon> pokedex = new ArrayList<>();
+        //Si no añadimos un PKM al inicio, peta
+        pokedex.add(new Pokemon("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"));
+
+        final boolean ocultar_capturados = sharedPreferences.getBoolean("switch_hide_catched", true);
+        String limite = sharedPreferences.getString("edit_text_limit", "100");
+
+
+        Call<PokemonList> call = pkmInterface.doGetPokedex("0", limite);
+        call.enqueue(new Callback<PokemonList>() {
+            @Override
+            public void onResponse(Call<PokemonList> call, Response<PokemonList> response) {
+
+                PokemonList pkmList = response.body();
+                Integer count = pkmList.count;
+                //String next = pkmList.next;
+                //String previous = pkmList.previous;
+                List<PokemonList.Results> results = pkmList.results;
+                pokedex.clear();
+                for(PokemonList.Results r: results){
+                    if ( r.name != null && r.url != null) {
+                        Pokemon p = new Pokemon(r.name, r.url);
+                        //Consultamos si el pokemon está en la BBDD
+                        estaCapturado = isPokemonCapturado(r.name);
+                        p.setCapturado(estaCapturado);
+                        //Añadimos el pokemon al array local, si la opción es esa.
+                        if (ocultar_capturados == false) pokedex.add(p);
+                    }
+                } //fin for
+            }
+            @Override
+            public void onFailure(Call<PokemonList> call, Throwable t) {
+                call.cancel();
+            }
+        });
+
+        //Devolvemos la pokedex
+        return pokedex;
+    } //Fin de getPokedex
+
+    /**
+     * Recorre el ArrayList de los capturados para ver si está capturado el name
+     * @param name
+     * @return
+     */
+    public boolean isPokemonCapturado(String name) {
+        boolean capturado = false;
+        for (Pokemon p: getPokemonCapturados()){
+            if (p.getNombre().equals(name)) capturado = true;
+            //¿Salir del bucle?
+        }
+        return capturado;
+
+    }
+
+    /**
+     * Configura el idioma según los ajustes
+     */
+    private void configurarIdioma(SharedPreferences sharedPreferences) {
         Boolean spanish = sharedPreferences.getBoolean("switch_language", true);
         if (spanish) {
             LocaleListCompat appLocale = LocaleListCompat.forLanguageTags("es-ES");
@@ -85,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
             LocaleListCompat appLocale = LocaleListCompat.forLanguageTags("en-US");
             AppCompatDelegate.setApplicationLocales(appLocale);
         }
+    }
 
-    } //Fin onCreate
-
+    /*
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         //Idioma
@@ -102,22 +207,7 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onConfigurationChanged(newConfig);
     }
-
-    /**
-     * Consulta los Pokemon de la BBDD
-     * @return
-     */
-    private ArrayList<Pokemon> getCapturados(FirestoneApi db) {
-        ArrayList<Pokemon> capturadosDB = new ArrayList<>();
-
-        if (db == null)
-            db = new FirestoneApi();
-
-        capturadosDB = db.getPokemonCapturados();
-        return capturadosDB;
-    }
-
-
+    */
 
     @Override
     protected void onDestroy() {

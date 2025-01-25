@@ -224,9 +224,11 @@ public class FirestoneApi {
 
         ArrayList<Pokemon> capturados = new ArrayList<Pokemon>();
         ArrayList<PokemonDB> pokemonDBArrayList = new ArrayList<>();
+        //Añadimos un pokemon para que no se rompa
+        addPokemon(new Pokemon("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"));
 
-        db.collection("capturados")
-                .get()
+
+        db.collection("capturados").get()
                 /*
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -248,6 +250,7 @@ public class FirestoneApi {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot querySnapshot) {
+                        capturados.clear();
                         for (DocumentSnapshot documentSnapshot : querySnapshot){
                             //PokemonDB pokemonDB = documentSnapshot.toObject(PokemonDB.class);
                             try{

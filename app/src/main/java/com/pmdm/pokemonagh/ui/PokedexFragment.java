@@ -37,11 +37,11 @@ public class PokedexFragment extends Fragment {
     private ArrayList<Pokemon> pkCapturados = new ArrayList<Pokemon>();
 
     public void setPokedex(ArrayList<Pokemon> pokedex) {
-        this.pokedex = getPokedex("10");//pokedex;
+        this.pokedex = pokedex;
     }
 
-    private PokemonApiInterface pkmInterface = PokemonApiClient.getClient().create(PokemonApiInterface.class);
-    private FirestoneApi firestoneApi = new FirestoneApi();
+    //private PokemonApiInterface pkmInterface = PokemonApiClient.getClient().create(PokemonApiInterface.class);
+    //private FirestoneApi firestoneApi = new FirestoneApi();
 
     @Nullable
     @Override
@@ -57,18 +57,22 @@ public class PokedexFragment extends Fragment {
         String limite = sharedPreferences.getString("edit_text_limit", "50");
 
         //llamamos ApiPokemon para obtener la pokedex, y se la pasamos al MainActivity
-        pokedex = getPokedex(limite);
-        ((MainActivity)getActivity()).setPkmPokedex(pokedex);
+
+        //pokedex = ((MainActivity)getActivity()).getPkmPokedex();
+        pokedex = ((MainActivity)getActivity()).getPokedex(sharedPreferences);
 
         //Intentamos obtener los pokemon capturados
         pkCapturados = ((MainActivity)getActivity()).getPkmCapturados();
 
         boolean capturado = false;
 
+        /*
         for (Pokemon pPokedex : pokedex){
             capturado = firestoneApi.pokemonEstaCapturado(pPokedex.getNombre());
             if (capturado) pPokedex.setCapturado(true);
         }
+        */
+
 
         if (pokedex != null && pokedex.size() > 0) {
             adapter = new PokedexRecyclerViewAdapter(pokedex, getActivity());
@@ -82,6 +86,10 @@ public class PokedexFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        String limite = sharedPreferences.getString("edit_text_limit", "50");
+        pokedex = ((MainActivity)getActivity()).getPokedex(sharedPreferences);
         //pokedex.clear(); pokedex = getPokedex("10");
 
     }
@@ -91,46 +99,8 @@ public class PokedexFragment extends Fragment {
      */
     public PokedexFragment(){
         super(R.layout.fragment_pokedex);
+        //this.pokedex = ((MainActivity)getActivity()).getPkmPokedex();
     } //Fin Constructor
-
-    /**
-     * Llamada a la API para obtener la Pokedex
-     * @return
-     */
-    private ArrayList<Pokemon> getPokedex(String limite) {
-        ArrayList<Pokemon> pokedex = new ArrayList<>();
-        //Si no añadimos un PKM al inicio, peta
-        pokedex.add(new Pokemon("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"));
-
-        Call<PokemonList> call = pkmInterface.doGetPokedex("0", limite);
-        call.enqueue(new Callback<PokemonList>() {
-            @Override
-            public void onResponse(Call<PokemonList> call, Response<PokemonList> response) {
-
-                PokemonList pkmList = response.body();
-                Integer count = pkmList.count;
-                //String next = pkmList.next;
-                //String previous = pkmList.previous;
-                List<PokemonList.Results> results = pkmList.results;
-                pokedex.clear();
-                for(PokemonList.Results r: results){
-                    if ( r.name != null && r.url != null) {
-                        Pokemon p = new Pokemon(r.name, r.url);
-                        //Añadimos el pokemon al array local
-                        pokedex.add(p);
-                    }
-                } //fin for
-            }
-            @Override
-            public void onFailure(Call<PokemonList> call, Throwable t) {
-                call.cancel();
-            }
-        });
-
-        //Devolvemos la pokedex
-        return pokedex;
-    } //Fin de getPokedex
-
 
 
 }
